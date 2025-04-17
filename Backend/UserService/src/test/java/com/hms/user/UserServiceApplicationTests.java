@@ -1,10 +1,10 @@
-package com.hms;
+package com.hms.user;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class HmsApplicationTests {
+class UserServiceApplicationTests {
 
 	@Test
 	void contextLoads() {
