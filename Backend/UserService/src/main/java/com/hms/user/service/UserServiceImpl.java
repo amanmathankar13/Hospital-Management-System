@@ -24,7 +24,7 @@ public class UserServiceImpl implements UserService {
     public void registerUser(UserDTO userDTO) throws HMSException {
         Optional<User> opt = userRepository.findByEmail(userDTO.getEmail());
         if (opt.isPresent()) {
-            throw new HMSException("User Already Exists");
+            throw new HMSException("USER_ALREADY_EXISTS");
         }
         userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         userRepository.save(userDTO.toEntity());
@@ -32,9 +32,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO loginUser(UserDTO userDTO) throws HMSException {
-        User user = userRepository.findByEmail(userDTO.getEmail()).orElseThrow(()-> new HMSException("User not found"));
+        User user = userRepository.findByEmail(userDTO.getEmail()).orElseThrow(()-> new HMSException("USER_NOT_FOUND"));
         if (!passwordEncoder.matches(userDTO.getPassword(), user.getPassword())) {
-            throw new HMSException("Invalid Password");
+            throw new HMSException("INVALID_CREDENTIALS");
         }
         user.setPassword(null);
         return user.toDTO();
@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO getUserById(Long id) {
-        return userRepository.findById(id).map(User::toDTO).orElseThrow(()-> new HMSException("User Not Found By Given id"));
+        return userRepository.findById(id).map(User::toDTO).orElseThrow(()-> new HMSException("USER_NOT_FOUND"));
     }
 
     @Override

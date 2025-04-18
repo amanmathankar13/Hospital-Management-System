@@ -1,0 +1,17 @@
+{"properties": [
+  {
+    "name": "USER_NOT_FOUND",
+    "type": "java.lang.String",
+    "description": "A description for 'USER_NOT_FOUND'"
+  },
+  {
+    "name": "INVALID_CREDENTIALS",
+    "type": "java.lang.String",
+    "description": "A description for 'INVALID_CREDENTIALS'"
+  },
+  {
+    "name": "USER_ALREADY_EXISTS",
+    "type": "java.lang.String",
+    "description": "A description for 'USER_ALREADY_EXISTS'"
+  }
+]}
