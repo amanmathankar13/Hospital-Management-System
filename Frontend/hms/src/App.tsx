@@ -1,8 +1,12 @@
 import React from 'react';
 import './App.css';
 import '@mantine/core/styles.css';
+import '@mantine/notifications/styles.css';
 import {createTheme, MantineProvider } from '@mantine/core';
 import AppRoutes from './Routes/AppRoutes';
+import { Notifications } from '@mantine/notifications';
+import { Provider } from 'react-redux';
+import Store from './Store';
 
 
 const theme = createTheme({
@@ -27,9 +31,12 @@ const theme = createTheme({
 
 function App() {
   return (
+    <Provider store={Store}>
     <MantineProvider theme={theme}>
+      <Notifications/>
       <AppRoutes/>
     </MantineProvider>
+    </Provider>
   );
 }
 
