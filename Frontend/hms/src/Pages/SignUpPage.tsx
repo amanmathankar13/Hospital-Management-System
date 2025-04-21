@@ -53,7 +53,7 @@ return (
                 <div className='self-center font-medium font-heading text-xl mb-2'>
                     SignUp
                 </div>
-                <SegmentedControl className='[&_*]: text-sm border border-gray-400' color='primary.5' bg="none" {...form.getInputProps("type")} fullWidth size="md" radius="lg" data={[{label:'Patient',value:'PATIENT'}, {label:'Doctor',value:'DOCTOR'}, {label:'Admin',value:'ADMIN'}]} />
+                <SegmentedControl className='[&_*]: text-sm border border-gray-400' color='primary.5' bg="none" {...form.getInputProps("role")} fullWidth size="md" radius="lg" data={[{label:'Patient',value:'PATIENT'}, {label:'Doctor',value:'DOCTOR'}, {label:'Admin',value:'ADMIN'}]} />
                     <TextInput
                     variant="unstyled"
                     size="md"

@@ -1,7 +1,7 @@
 import { Button, PasswordInput, TextInput } from '@mantine/core'
 import { useForm } from '@mantine/form';
 import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { loginUser } from '../Service/UserService';
 import { errorNotification, successNotification } from '../Utility/NotificationService';
 import { useDispatch } from 'react-redux';
@@ -11,7 +11,6 @@ import { setUser } from '../Slices/UserSlice';
 
 const LoginPage = () => {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const form = useForm({
         initialValues: {
@@ -30,7 +29,6 @@ const LoginPage = () => {
             successNotification("Logged in Successfully.");
             dispatch(setJwt(response));
             dispatch(setUser(jwtDecode(response)))
-            navigate('/dashboard');
         })
         .catch((error)=>{
             errorNotification(error?.response?.data?.errorMessage);

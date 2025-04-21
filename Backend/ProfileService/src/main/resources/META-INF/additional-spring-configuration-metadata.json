@@ -1,0 +1,22 @@
+{"properties": [
+  {
+    "name": "DOCTOR_ALREADY_EXISTS",
+    "type": "java.lang.String",
+    "description": "A description for 'DOCTOR_ALREADY_EXISTS'"
+  },
+  {
+    "name": "DOCTOR_NOT_FOUND",
+    "type": "java.lang.String",
+    "description": "A description for 'DOCTOR_NOT_FOUND'"
+  },
+  {
+    "name": "PATIENT_NOT_FOUND",
+    "type": "java.lang.String",
+    "description": "A description for 'PATIENT_NOT_FOUND'"
+  },
+  {
+    "name": "PATIENT_ALREADY_EXISTS",
+    "type": "java.lang.String",
+    "description": "A description for 'PATIENT_ALREADY_EXISTS'"
+  }
+]}
