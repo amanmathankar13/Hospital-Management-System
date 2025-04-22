@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.hms.user.dto.UserDTO;
 import com.hms.user.entity.User;
@@ -12,6 +13,7 @@ import com.hms.user.exception.HMSException;
 import com.hms.user.repository.UserRepository;
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
 
     @Autowired
@@ -20,6 +22,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
+    @Autowired
+    private ApiService apiService;
+
     @Override
     public void registerUser(UserDTO userDTO) throws HMSException {
         Optional<User> opt = userRepository.findByEmail(userDTO.getEmail());
@@ -27,6 +32,9 @@ public class UserServiceImpl implements UserService {
             throw new HMSException("USER_ALREADY_EXISTS");
         }
         userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        Long profileId = apiService.addProfile(userDTO).block();
+        System.out.println(profileId);
+        userDTO.setProfileId(profileId);
         userRepository.save(userDTO.toEntity());
     }
 

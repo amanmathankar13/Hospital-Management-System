@@ -21,8 +21,10 @@ public class PatientDTO {
     private String address;
     private String identityNumber;
     private BloodGroup bloodGroup;
+    private String allergies;
+    private String chronicDisease;
 
     public Patient toEntity(){
-        return new Patient(this.id, this.name, this.email, this.dob, this.phoneNumber, this.address, this.identityNumber, this.bloodGroup);
+        return new Patient(this.id, this.name, this.email, this.dob, this.phoneNumber, this.address, this.identityNumber, this.bloodGroup, this.allergies, this.chronicDisease);
     }
 }
