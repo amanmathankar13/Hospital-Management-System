@@ -1,24 +1,24 @@
 import { Avatar, Text} from '@mantine/core'
-import { IconCalendarCheck, IconCannabis, IconLayoutDashboard, IconStethoscope, IconVaccine, IconWheelchair } from '@tabler/icons-react'
+import { IconCalendarCheck, IconCannabis, IconLayoutDashboard, IconUser, IconVaccine, IconWheelchair } from '@tabler/icons-react'
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 
 const links=[
     {
-        name:"Dashboard", url:"/dashboard", icon:<IconLayoutDashboard stroke={1.5}/>
+        name:"Dashboard", url:"/doctor/dashboard", icon:<IconLayoutDashboard stroke={1.5}/>
     },
     {
-        name:"Doctors", url:"/doctors", icon:<IconStethoscope stroke={1.5}/>
+        name:"Profile", url:"/doctor/profile", icon:<IconUser stroke={1.5}/>
     },
     {
-        name:"Patients", url:"/patients", icon:<IconWheelchair stroke={1.5}/>
+        name:"Patients", url:"/doctor/patients", icon:<IconWheelchair stroke={1.5}/>
     },
     {
-        name:"Appointments", url:"/appointments", icon:<IconCalendarCheck stroke={1.5}/>
+        name:"Appointments", url:"/doctor/appointments", icon:<IconCalendarCheck stroke={1.5}/>
     },
     {
-        name:"Pharmacy", url:"/pharmacy", icon:<IconVaccine stroke={1.5}/>
+        name:"Pharmacy", url:"/doctor/pharmacy", icon:<IconVaccine stroke={1.5}/>
     }
 ]
 
@@ -35,7 +35,7 @@ const Sidebar = () => {
             <div className='flex flex-col gap-5 mt-20'>
                 <div className='flex flex-col gap-1 items-center'>
                     <div className='p-1 bg-white rounded-full shadow-xl'>
-                        <Avatar variant='filled' src="avatar.png" size={'xl'} alt="it's me" />
+                        <Avatar variant='filled' src="/avatar.png" size={'xl'} alt="it's me" />
                     </div>
                     <span className='font-medium text-light'>{user.name}</span>
                     <Text c="dimmed" className='text-light' size='xs'>{user.role}</Text>

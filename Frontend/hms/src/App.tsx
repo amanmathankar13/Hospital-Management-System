@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import '@mantine/core/styles.css';
+import '@mantine/dates/styles.css';
 import '@mantine/notifications/styles.css';
 import {createTheme, MantineProvider } from '@mantine/core';
 import AppRoutes from './Routes/AppRoutes';

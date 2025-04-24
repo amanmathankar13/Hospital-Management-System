@@ -1,20 +1,20 @@
-import { Avatar, Button, Divider, Modal, NumberInput, Select, Table, TagsInput, TextInput } from '@mantine/core'
+import { Avatar, Button, Divider, Modal, NumberInput, Select, Table, TextInput } from '@mantine/core'
 import { DateInput } from '@mantine/dates';
 import { IconEdit } from '@tabler/icons-react';
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
-import { bloodGroups } from '../../../Data/DrowDownData';
+import {doctorDepartments, doctorSpecializations } from '../../../Data/DrowDownData';
 import { useDisclosure } from '@mantine/hooks';
 
 const Profile = () => {
-    const patient = {
+    const doctor = {
         dob: "1990-06-15",
         phoneNumber: "+1 234 567 890",
         address: "123 Main St, Springfield",
-        identityNumber: "A123456789",
-        bloodGroup: "O+",
-        allergies: "Peanuts",
-        chronicDisease: "Diabetes"
+        licenseNumber: "A123456789",
+        specialization: "O+",
+        department: "Peanuts",
+        experience: "Diabetes"
     };
     const[edit, setEdit] = useState(false);
     const user = useSelector((state:any)=> state.user);
@@ -41,38 +41,38 @@ const Profile = () => {
                 <Table.Tbody className='[&>tr]:!mb-3'>
                     <Table.Tr>
                         <Table.Td className='font-semibold text-xl'>Date of Birth</Table.Td>
-                        {edit?<Table.Td className='text-xl'><DateInput placeholder="Date of birth"/></Table.Td>:<Table.Td className='text-xl'>{patient.dob}</Table.Td>}
+                        {edit?<Table.Td className='text-xl'><DateInput placeholder="Date of birth"/></Table.Td>:<Table.Td className='text-xl'>{doctor.dob}</Table.Td>}
                     </Table.Tr>
                     <Table.Tr>
                         <Table.Td className='font-semibold text-xl'>Phone</Table.Td>
                         {edit?<Table.Td className='text-xl'><NumberInput placeholder='Phone number' hideControls maxLength={10} clampBehavior='strict' minLength={10}/>
-                        </Table.Td>:<Table.Td className='text-xl'>{patient.phoneNumber}</Table.Td>}
+                        </Table.Td>:<Table.Td className='text-xl'>{doctor.phoneNumber}</Table.Td>}
                     </Table.Tr>
                     <Table.Tr>
                         <Table.Td className='font-semibold text-xl'>Address</Table.Td>
                         {edit?<Table.Td className='text-xl'><TextInput
                             placeholder={'Address'}/>
-                        </Table.Td>:<Table.Td className='text-xl'>{patient.address}</Table.Td>}
+                        </Table.Td>:<Table.Td className='text-xl'>{doctor.address}</Table.Td>}
                     </Table.Tr>
                     <Table.Tr>
-                        <Table.Td className='font-semibold text-xl'>Identity Number</Table.Td>
-                        {edit?<Table.Td className='text-xl'><NumberInput placeholder='Identity number' hideControls maxLength={12} clampBehavior='strict' minLength={12}/>
-                        </Table.Td>:<Table.Td className='text-xl'>{patient.identityNumber}</Table.Td>}
+                        <Table.Td className='font-semibold text-xl'>License Number</Table.Td>
+                        {edit?<Table.Td className='text-xl'><NumberInput placeholder='License number' hideControls maxLength={12} clampBehavior='strict' minLength={12}/>
+                        </Table.Td>:<Table.Td className='text-xl'>{doctor.licenseNumber}</Table.Td>}
                     </Table.Tr>
                     <Table.Tr>
-                        <Table.Td className='font-semibold text-xl'>Blood Group</Table.Td>
-                        {edit?<Table.Td className='text-xl'><Select data={bloodGroups} placeholder='Blood group'/>
-                        </Table.Td>:<Table.Td className='text-xl'>{patient.bloodGroup}</Table.Td>}
+                        <Table.Td className='font-semibold text-xl'>Specialization</Table.Td>
+                        {edit?<Table.Td className='text-xl'><Select data={doctorSpecializations} placeholder='Specialization'/>
+                        </Table.Td>:<Table.Td className='text-xl'>{doctor.specialization}</Table.Td>}
                     </Table.Tr>
                     <Table.Tr>
-                        <Table.Td className='font-semibold text-xl'>Allergies</Table.Td>
-                        {edit?<Table.Td className='text-xl'><TagsInput placeholder="Allergies" />
-                        </Table.Td>:<Table.Td className='text-xl'>{patient.allergies||"None"}</Table.Td>}
+                        <Table.Td className='font-semibold text-xl'>Department</Table.Td>
+                        {edit?<Table.Td className='text-xl'><Select data={doctorDepartments} placeholder='Department'/>
+                        </Table.Td>:<Table.Td className='text-xl'>{doctor.department}</Table.Td>}
                     </Table.Tr>
                     <Table.Tr>
-                        <Table.Td className='font-semibold text-xl'>Chronic Disease</Table.Td>
-                        {edit?<Table.Td className='text-xl'><TagsInput placeholder="Chronic disease" />
-                        </Table.Td>:<Table.Td className='text-xl'>{patient.chronicDisease||"None"}</Table.Td>}
+                        <Table.Td className='font-semibold text-xl'>Experience</Table.Td>
+                        {edit?<Table.Td className='text-xl'><NumberInput placeholder='Experience' hideControls max={50} clampBehavior='strict'/>
+                        </Table.Td>:<Table.Td className='text-xl'>{doctor.experience} years</Table.Td>}
                     </Table.Tr>
                 </Table.Tbody>
             </Table>
