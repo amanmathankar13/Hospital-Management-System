@@ -20,7 +20,7 @@ public class MyUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         try{
             UserDTO userDTO = userService.getUserByEmail(email);
-            return new CustomUserDetails(userDTO.getId(), userDTO.getEmail(), userDTO.getEmail(), userDTO.getPassword(), userDTO.getRole(), userDTO.getName(), null);
+            return new CustomUserDetails(userDTO.getId(), userDTO.getEmail(), userDTO.getEmail(), userDTO.getPassword(), userDTO.getRole(), userDTO.getName(),userDTO.getProfileId(), null);
         }
         catch (HMSException e) {
            e.printStackTrace();

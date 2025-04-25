@@ -15,11 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hms.profile.dto.DoctorDTO;
 import com.hms.profile.exception.HMSException;
 import com.hms.profile.service.DoctorService;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 @RestController
 @CrossOrigin
-@RequestMapping("/profile/doctor")
 @Validated
+@RequestMapping("/profile/doctor")
 public class DoctorController {
 
     @Autowired
@@ -35,6 +37,9 @@ public class DoctorController {
         return new ResponseEntity<>(doctorService.getDoctorById(id), HttpStatus.OK);
     }
 
-    
+    @PutMapping("/update")
+    public ResponseEntity<DoctorDTO> updateDoctor(@RequestBody DoctorDTO doctorDTO) throws HMSException {
+        return new ResponseEntity<>(doctorService.updateDoctor(doctorDTO), HttpStatus.OK);
+    }
 
 }

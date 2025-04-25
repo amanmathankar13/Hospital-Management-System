@@ -27,7 +27,7 @@ public class TokenFilter extends AbstractGatewayFilterFactory<TokenFilter.Config
         return (exchange, chain)-> {
             String path = exchange.getRequest().getPath().toString();
             if(path.equals("/user/login")||path.equals("/user/register")){
-                return chain.filter(exchange.mutate().request(r->r.header("X-Secret-Key", "SECRET_KEY")).build());
+                return chain.filter(exchange.mutate().request(r->r.header("X-Secret-Key", "SECRET")).build());
             }
             HttpHeaders headers = exchange.getRequest().getHeaders();
             if(!headers.containsKey(HttpHeaders.AUTHORIZATION)){
@@ -40,6 +40,7 @@ public class TokenFilter extends AbstractGatewayFilterFactory<TokenFilter.Config
             String token = authHeader.substring(7);
             try{
                 Claims claims = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
+                exchange = exchange.mutate().request(r->r.header("X-Secret-Key", "SECRET")).build();
             }
             catch (Exception e) {
                 throw new RuntimeException("Invalid token");

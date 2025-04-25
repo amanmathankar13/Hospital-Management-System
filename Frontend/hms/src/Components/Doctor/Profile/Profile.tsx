@@ -1,10 +1,11 @@
 import { Avatar, Button, Divider, Modal, NumberInput, Select, Table, TextInput } from '@mantine/core'
 import { DateInput } from '@mantine/dates';
 import { IconEdit } from '@tabler/icons-react';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import {doctorDepartments, doctorSpecializations } from '../../../Data/DrowDownData';
 import { useDisclosure } from '@mantine/hooks';
+import { getDoctor } from '../../../Service/DoctorProfileService';
 
 const Profile = () => {
     const doctor = {
@@ -19,6 +20,18 @@ const Profile = () => {
     const[edit, setEdit] = useState(false);
     const user = useSelector((state:any)=> state.user);
     const[opened,{open,close}] = useDisclosure(false);
+
+    const[profile, setProfile] = useState({});
+
+    useEffect(()=>{
+        console.log(user);
+        getDoctor(user.profileId).then((data)=>{
+            setProfile(data);
+            console.log(data);
+        }).catch((error)=>{
+            console.log(error);
+        })
+    }, [user])
   return (
     <div className='p-10'>
         <div className='flex justify-between items-center'>

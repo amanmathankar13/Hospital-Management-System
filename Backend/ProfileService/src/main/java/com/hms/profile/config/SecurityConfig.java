@@ -30,7 +30,7 @@ public class SecurityConfig {
         // });
         // http.csrf(csrf -> csrf.disable());
         // return http.build();
-        http.csrf(csrf -> csrf.disable()).authorizeHttpRequests(auth -> auth.requestMatchers(request -> "SECRET_KEY".equals(request.getHeader("X-Secret-Key"))).permitAll().anyRequest().denyAll());
+        http.csrf(csrf -> csrf.disable()).authorizeHttpRequests(auth -> auth.requestMatchers(request -> "SECRET".equals(request.getHeader("X-Secret-Key"))).permitAll().anyRequest().denyAll());
         return http.build();
 
     }

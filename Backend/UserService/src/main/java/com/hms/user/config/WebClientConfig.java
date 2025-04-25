@@ -12,7 +12,7 @@ public class WebClientConfig {
 
     @Bean
     public WebClient.Builder webClient() {
-        return WebClient.builder().defaultHeader("X-Secret-Key", "SECRET_KEY").filter(logRequest());
+        return WebClient.builder().defaultHeader("X-Secret-Key", "SECRET").filter(logRequest());
     }
 
     private ExchangeFilterFunction logRequest(){
