@@ -11,7 +11,7 @@ const getDoctor=async(id: any)=> {
 }
 
 const updateDoctor=async(doctor: any)=> {
-    return axiosInstance.post("profile/doctor/update",doctor)
+    return axiosInstance.put("profile/doctor/update",doctor)
     .then((response:any)=>{
         return response.data
         })
