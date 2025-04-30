@@ -37,5 +37,10 @@ public class PatientServiceImpl implements PatientService{
         }
         return patientRepository.save(patient.toEntity()).toDTO();
     }
+
+    @Override
+    public Boolean patientExists(Long id) throws HMSException {
+        return patientRepository.existsById(id);
+    }
     
 }

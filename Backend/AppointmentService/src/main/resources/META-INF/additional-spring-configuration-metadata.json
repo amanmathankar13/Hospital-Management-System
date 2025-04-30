@@ -1,0 +1,5 @@
+{"properties": [{
+  "name": "APPOINTMENT_ALREADY_CANCELLED",
+  "type": "java.lang.String",
+  "description": "A description for 'APPOINTMENT_ALREADY_CANCELLED'"
+}]}

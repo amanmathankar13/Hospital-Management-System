@@ -18,6 +18,7 @@ import com.hms.profile.service.DoctorService;
 import org.springframework.web.bind.annotation.PutMapping;
 
 
+
 @RestController
 @CrossOrigin
 @Validated
@@ -41,5 +42,11 @@ public class DoctorController {
     public ResponseEntity<DoctorDTO> updateDoctor(@RequestBody DoctorDTO doctorDTO) throws HMSException {
         return new ResponseEntity<>(doctorService.updateDoctor(doctorDTO), HttpStatus.OK);
     }
+
+    @GetMapping("/exists/{id}")
+    public ResponseEntity<Boolean> doctorExists(@PathVariable Long id) {
+        return new ResponseEntity<>(doctorService.doctorExists(id), HttpStatus.OK);
+    }
+    
 
 }
