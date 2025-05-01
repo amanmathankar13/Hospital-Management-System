@@ -1,6 +1,7 @@
 package com.hms.appointment.service;
 
 import com.hms.appointment.dto.AppointmentDTO;
+import com.hms.appointment.dto.AppointmentDetails;
 import com.hms.appointment.exception.HMSException;
 
 public interface AppointmentService {
@@ -10,5 +11,6 @@ public interface AppointmentService {
     void completeAppointment(Long appointmentId);
     void recheduleAppointment(Long appointmentId, String newDateTime);
     AppointmentDTO getAppointmentDetails(Long appointmentId) throws HMSException;
+    AppointmentDetails getAppointmentDetailsWithName(Long appointmentId) throws HMSException;
 
 }

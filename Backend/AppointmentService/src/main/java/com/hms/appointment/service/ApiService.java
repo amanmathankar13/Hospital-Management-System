@@ -4,6 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import com.hms.appointment.dto.DoctorDTO;
+import com.hms.appointment.dto.PatientDTO;
+
 import reactor.core.publisher.Mono;
 
 @Service
@@ -13,14 +16,18 @@ public class ApiService {
     private WebClient.Builder webClient;
 
     public Mono<Boolean> doctorExists(Long id){
-        return webClient.build().get().uri("http://localhost:8081/profile/doctor/exists/" + id).retrieve().bodyToMono(Boolean.class);
+        return webClient.build().get().uri("http://localhost:8082/profile/doctor/exists/" + id).retrieve().bodyToMono(Boolean.class);
     }
 
     public Mono<Boolean> patientExists(Long id){
-        return webClient.build().get().uri("http://localhost:8081/profile/patient/exists/" + id).retrieve().bodyToMono(Boolean.class);
+        return webClient.build().get().uri("http://localhost:8082/profile/patient/exists/" + id).retrieve().bodyToMono(Boolean.class);
     }
 
-    // public Mono<PatientDTO> getPatientById(Long id){
-    //     return webClient.build().get().u
-    // }
+    public Mono<PatientDTO> getPatientById(Long id){
+        return webClient.build().get().uri("http://localhost:8082/profile/patient/get/" + id).retrieve().bodyToMono(PatientDTO.class);
+    }
+
+    public Mono<DoctorDTO> getDoctorById(Long id){
+        return webClient.build().get().uri("http://localhost:8082/profile/doctor/get/" + id).retrieve().bodyToMono(DoctorDTO.class);
+    }
 }

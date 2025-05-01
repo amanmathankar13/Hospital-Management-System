@@ -1,5 +1,17 @@
-{"properties": [{
-  "name": "APPOINTMENT_ALREADY_CANCELLED",
-  "type": "java.lang.String",
-  "description": "A description for 'APPOINTMENT_ALREADY_CANCELLED'"
-}]}
+{"properties": [
+  {
+    "name": "APPOINTMENT_ALREADY_CANCELLED",
+    "type": "java.lang.String",
+    "description": "A description for 'APPOINTMENT_ALREADY_CANCELLED'"
+  },
+  {
+    "name": "DOCTOR_NOT_FOUND",
+    "type": "java.lang.String",
+    "description": "A description for 'DOCTOR_NOT_FOUND'"
+  },
+  {
+    "name": "PATIENT_NOT_FOUND",
+    "type": "java.lang.String",
+    "description": "A description for 'PATIENT_NOT_FOUND'"
+  }
+]}
