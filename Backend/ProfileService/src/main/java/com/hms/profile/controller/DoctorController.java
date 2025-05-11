@@ -34,7 +34,7 @@ public class DoctorController {
     }
 
     @GetMapping("/get/{id}")
-    public ResponseEntity<DoctorDTO> getDoctorById(@PathVariable Long id) throws HMSException {
+    public ResponseEntity<DoctorDTO> getDoctorById(@PathVariable("id") Long id) throws HMSException {
         return new ResponseEntity<>(doctorService.getDoctorById(id), HttpStatus.OK);
     }
 
