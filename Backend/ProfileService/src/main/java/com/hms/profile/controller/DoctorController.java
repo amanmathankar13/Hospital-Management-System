@@ -1,5 +1,7 @@
 package com.hms.profile.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,9 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hms.profile.dto.DoctorDTO;
+import com.hms.profile.dto.DoctorDropDown;
 import com.hms.profile.exception.HMSException;
 import com.hms.profile.service.DoctorService;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 
@@ -47,6 +52,12 @@ public class DoctorController {
     public ResponseEntity<Boolean> doctorExists(@PathVariable Long id) {
         return new ResponseEntity<>(doctorService.doctorExists(id), HttpStatus.OK);
     }
+
+    @GetMapping("/get/dropdown")
+    public ResponseEntity<List<DoctorDropDown>> getAllDropdown() {
+        return ResponseEntity.ok(doctorService.getAllDoctors());
+    }
+    
     
 
 }

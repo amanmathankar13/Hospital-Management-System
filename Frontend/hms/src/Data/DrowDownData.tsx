@@ -20,6 +20,28 @@ const bloodGroup: Record<string, string> = {
   };
 const doctorSpecializations = ["General Physician", "Cardiologist", "Dermatologist", "Neurologist", "Pediatrician", "Psychiatrist", "Gynecologist", "Orthopedic Surgeon", "ENT Specialist", "Ophthalmologist", "Oncologist", "Endocrinologist", "Gastroenterologist", "Urologist", "Nephrologist", "Pulmonologist"];
 const doctorDepartments = ["General Medicine", "Cardiology", "Dermatology", "Neurology", "Pediatrics", "Psychiatry", "Gynecology", "Orthopedics", "ENT", "Ophthalmology", "Oncology", "Endocrinology", "Gastroenterology", "Urology", "Nephrology", "Pulmonology", "Radiology", "Anesthesiology", "Emergency Medicine", "Surgery"];
+const appointmentReasons = [
+  "General Consultation",
+  "Follow-up Visit",
+  "Routine Check-up",
+  "Chronic Illness Management",
+  "Prescription Refill",
+  "Test Results Discussion",
+  "Injury Evaluation",
+  "Mental Health Counseling",
+  "Vaccination",
+  "Pre-surgery Evaluation",
+  "Post-surgery Check-up",
+  "Lab Test Recommendation",
+  "Fever or Cold Symptoms",
+  "Skin Rash or Allergy",
+  "Headache or Migraine",
+  "Blood Pressure Check",
+  "Diabetes Management",
+  "Pregnancy Consultation",
+  "Menstrual Issues",
+  "Child Wellness Check-up"
+];
 
 
-export {bloodGroups, bloodGroup, doctorSpecializations, doctorDepartments};
+export {bloodGroups, bloodGroup, doctorSpecializations, doctorDepartments,appointmentReasons};

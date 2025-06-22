@@ -13,5 +13,10 @@
     "name": "USER_ALREADY_EXISTS",
     "type": "java.lang.String",
     "description": "A description for 'USER_ALREADY_EXISTS'"
+  },
+  {
+    "name": "INVALID_CREDENTIALS",
+    "type": "java.lang.String",
+    "description": "A description for 'INVALID_CREDENTIALS'"
   }
 ]}

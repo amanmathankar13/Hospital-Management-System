@@ -7,6 +7,7 @@ import {createTheme, MantineProvider } from '@mantine/core';
 import AppRoutes from './Routes/AppRoutes';
 import { Notifications } from '@mantine/notifications';
 import { Provider } from 'react-redux';
+import { PrimeReactProvider } from 'primereact/api';
 import Store from './Store';
 
 
@@ -34,8 +35,10 @@ function App() {
   return (
     <Provider store={Store}>
     <MantineProvider theme={theme}>
-      <Notifications/>
-      <AppRoutes/>
+      <PrimeReactProvider>
+          <Notifications/>
+          <AppRoutes/>
+      </PrimeReactProvider>
     </MantineProvider>
     </Provider>
   );

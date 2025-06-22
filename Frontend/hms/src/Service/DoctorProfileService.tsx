@@ -9,6 +9,15 @@ const getDoctor=async(id: any)=> {
             throw error
             })
 }
+const getDoctorDropDown=async()=> {
+    return axiosInstance.get("profile/doctor/get/dropdown")
+    .then((response:any)=>{
+        return response.data
+        })
+        .catch((error:any)=>{
+            throw error
+            })
+}
 
 const updateDoctor=async(doctor: any)=> {
     return axiosInstance.put("profile/doctor/update",doctor)
@@ -20,4 +29,4 @@ const updateDoctor=async(doctor: any)=> {
             })
 }
 
-export {getDoctor, updateDoctor};
+export {getDoctor, updateDoctor, getDoctorDropDown};
