@@ -11,17 +11,17 @@ import com.hms.appointment.dto.PatientDTO;
 public interface ProfileClient {
     // ...
     @GetMapping("/profile/doctor/exists/{id}")
-    Boolean doctorExists(@PathVariable("id") Long id);
+    Boolean doctorExists(@PathVariable Long id);
 
    
     @GetMapping("/profile/patient/exists/{id}")
-    Boolean patientExists(@PathVariable("id") Long id);
+    Boolean patientExists(@PathVariable Long id);
 
     @GetMapping("/profile/patient/get/{id}")
-    PatientDTO getPatientById(@PathVariable("id") Long id);
+    PatientDTO getPatientById(@PathVariable Long id);
 
     @GetMapping("/profile/doctor/get/{id}")
-    DoctorDTO getDoctorById(@PathVariable("id") Long id);
+    DoctorDTO getDoctorById(@PathVariable Long id);
 
 
 }

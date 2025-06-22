@@ -14,17 +14,17 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     @Bean
-    public BCryptPasswordEncoder passwordEncoder(){
+    BCryptPasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration builder) throws Exception{
+    AuthenticationManager authenticationManager(AuthenticationConfiguration builder) throws Exception{
         return builder.getAuthenticationManager();
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
+    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         // http.authorizeRequests((request)->{
         //     request.requestMatchers("/**").permitAll().anyRequest().authenticated();
         // });

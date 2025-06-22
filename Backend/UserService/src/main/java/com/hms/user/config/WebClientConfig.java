@@ -11,7 +11,7 @@ import reactor.core.publisher.Mono;
 public class WebClientConfig {
 
     @Bean
-    public WebClient.Builder webClient() {
+    WebClient.Builder webClient() {
         return WebClient.builder().defaultHeader("X-Secret-Key", "SECRET").filter(logRequest());
     }
 
