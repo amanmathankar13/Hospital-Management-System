@@ -1,5 +1,7 @@
 package com.hms.appointment.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,7 @@ import com.hms.appointment.service.AppointmentService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.GetMapping;
+
 
 
 
@@ -48,6 +51,10 @@ public class AppointmentController {
     public ResponseEntity<AppointmentDetails> getAppointmentDetailsWithName(@PathVariable Long appointmentId) {
         return new ResponseEntity<>(appointmentService.getAppointmentDetailsWithName(appointmentId), HttpStatus.OK);
     }
-    
+
+    @GetMapping("/get/detailsByPatientId/{patientId}")
+    public ResponseEntity<List<AppointmentDetails>> getAppointmentDetailsByPatientId(@PathVariable("patientId") Long patientId) {
+        return ResponseEntity.ok(appointmentService.getAppointmentDetailsByPatientId(patientId));
+    }
     
 }

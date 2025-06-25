@@ -1,5 +1,7 @@
 package com.hms.appointment.service.implementation;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +14,6 @@ import com.hms.appointment.dto.PatientDTO;
 import com.hms.appointment.entity.Appointment;
 import com.hms.appointment.exception.HMSException;
 import com.hms.appointment.repository.AppointmentRepository;
-import com.hms.appointment.service.ApiService;
 import com.hms.appointment.service.AppointmentService;
 
 @Service
@@ -21,8 +22,6 @@ public class AppointmentServiceImpl implements AppointmentService{
     @Autowired
     private AppointmentRepository appointmentRepository;
 
-    @Autowired
-    private ApiService apiService;
 
     @Autowired
     private ProfileClient profileClient;
@@ -73,11 +72,18 @@ public class AppointmentServiceImpl implements AppointmentService{
         AppointmentDTO appointmentDTO = appointmentRepository.findById(appointmentId).orElseThrow(()-> new HMSException("APPOINTMENT_NOT_FOUND")).toDTO();
         DoctorDTO doctorDTO = profileClient.getDoctorById(appointmentDTO.getDoctorId());
         PatientDTO patientDTO = profileClient.getPatientById(appointmentDTO.getPatientId());
-        return new AppointmentDetails(appointmentDTO.getId(),appointmentDTO.getPatientId(),patientDTO.getName(),appointmentDTO.getDoctorId(),doctorDTO.getName(),appointmentDTO.getAppointmentTime(),appointmentDTO.getAppointmentStatus(),appointmentDTO.getReason(),appointmentDTO.getNotes());
+        return new AppointmentDetails(appointmentDTO.getId(),appointmentDTO.getPatientId(),patientDTO.getName(),patientDTO.getEmail(), patientDTO.getPhoneNumber(), appointmentDTO.getDoctorId(),doctorDTO.getName(),appointmentDTO.getAppointmentTime(),appointmentDTO.getAppointmentStatus(),appointmentDTO.getReason(),appointmentDTO.getNotes());
 
 
     }
 
-    
-    
+    @Override
+    public List<AppointmentDetails> getAppointmentDetailsByPatientId(Long id) {
+        return appointmentRepository.findAllByPatientId(id).stream().map(appointment -> {
+            DoctorDTO doctorDTO = profileClient.getDoctorById(appointment.getDoctorId());
+            appointment.setDoctorName(doctorDTO.getName());
+            return appointment;
+        }).toList();
+    }
+
 }
