@@ -3,6 +3,7 @@ package com.hms.appointment.service.implementation;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.hms.appointment.dto.MedicineDTO;
 import com.hms.appointment.entity.Medicine;
@@ -13,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class MedicineServiceImpl implements MedicineService {
 
 
@@ -30,7 +32,7 @@ public class MedicineServiceImpl implements MedicineService {
 
     @Override
     public List<MedicineDTO> getAllMedicinesByPrescriptionId(Long prescriptionId) {
-        return ((List<Medicine>)medicineRepository.findAllByPrescription_Id(prescriptionId)).stream().map(Medicine::toDTO).toList();
+        return (medicineRepository.findAllByPrescription_Id(prescriptionId)).stream().map(Medicine::toDTO).toList();
     }
 
 }

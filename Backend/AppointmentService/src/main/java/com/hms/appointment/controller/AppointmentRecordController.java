@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/appointment-record")
+@RequestMapping("/appointment/record")
 @Validated
 @RequiredArgsConstructor
 public class AppointmentRecordController {
@@ -34,13 +34,19 @@ public class AppointmentRecordController {
     }
 
     @PutMapping("/update")
-    public void updateAppointmentRecord(@RequestBody AppointmentRecordDTO appointmentRecordDTO) {
+    public ResponseEntity<String> updateAppointmentRecord(@RequestBody AppointmentRecordDTO appointmentRecordDTO) {
         appointmentRecordService.updateAppointmentRecord(appointmentRecordDTO);
+        return ResponseEntity.ok("Appointment Record updated successfully");
     }
 
     @GetMapping("/get/appointmentId/{id}")
     public ResponseEntity<AppointmentRecordDTO> getByAppointmentId(@PathVariable("id") Long appointmentId) {
         return ResponseEntity.ok(appointmentRecordService.getAppointmentRecordByAppointmentId(appointmentId));
+    }
+
+    @GetMapping("/getDetails/appointmentId/{id}")
+    public ResponseEntity<AppointmentRecordDTO> getAppointmentDetailsByAppointmentId(@PathVariable("id") Long appointmentId) {
+        return ResponseEntity.ok(appointmentRecordService.getAppointmentRecordDetailsByAppoitmentId(appointmentId));
     }
 
     @GetMapping("/get/{id}")

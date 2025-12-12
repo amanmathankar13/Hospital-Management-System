@@ -18,9 +18,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
 public class AppointmentRecord {
 
     @Id
@@ -35,6 +35,7 @@ public class AppointmentRecord {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "appointment_id")
     private Appointment appointment;
+    
 
     private String symptoms;
     private String diagnosis;
@@ -46,7 +47,7 @@ public class AppointmentRecord {
 
 
     public AppointmentRecordDTO toDto(){
-        return new AppointmentRecordDTO(id, patientId, doctorId, appointment.getId(), StringListConverter.convertStringtoList(symptoms), diagnosis, StringListConverter.convertStringtoList(tests), notes, referal, followUpDate, createdAt);
+        return new AppointmentRecordDTO(id, patientId, doctorId, appointment.getId(), StringListConverter.convertStringtoList(symptoms), diagnosis, StringListConverter.convertStringtoList(tests), notes, referal, null,followUpDate, createdAt);
     }
 
     

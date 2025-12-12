@@ -42,6 +42,66 @@ const appointmentReasons = [
   "Menstrual Issues",
   "Child Wellness Check-up"
 ];
+const symptoms = [
+  "Fever",
+  "Cough",
+  "Shortness of breath",
+  "Headache",
+  "Fatigue",
+  "Chest pain",
+  "Nausea",
+  "Vomiting",
+  "Diarrhea",
+  "Loss of appetite",
+  "Sore throat",
+  "Runny nose",
+  "Muscle pain",
+  "Joint pain",
+  "Dizziness",
+  "Rashes",
+  "Abdominal pain",
+  "Chills",
+  "Weight loss",
+  "Swelling"
+];
+
+const tests = [
+  "Complete Blood Count (CBC)",
+  "Liver Function Test (LFT)",
+  "Kidney Function Test (KFT)",
+  "Blood Sugar Test",
+  "Urine Routine Test",
+  "X-Ray Chest",
+  "MRI Scan",
+  "CT Scan",
+  "ECG",
+  "COVID-19 RT-PCR",
+  "Thyroid Profile (T3, T4, TSH)",
+  "Lipid Profile",
+  "Hemoglobin Test",
+  "Blood Pressure Monitoring",
+  "Ultrasound Abdomen",
+  "Pregnancy Test",
+  "HIV Test",
+  "Dengue Test",
+  "Malaria Test",
+  "Vitamin D Test"
+];
 
 
-export {bloodGroups, bloodGroup, doctorSpecializations, doctorDepartments,appointmentReasons};
+
+const medicineFrequencies = [
+  "1-0-0",
+  "0-1-0",
+  "0-0-1",
+  "1-0-1",
+  "1-1-0",
+  "0-1-1",
+  "1-1-1",
+  "1-0-2",
+  "2-0-2",
+  "1-1-1-1"
+];
+
+
+export {bloodGroups, bloodGroup, doctorSpecializations, doctorDepartments,appointmentReasons, symptoms, tests, medicineFrequencies};

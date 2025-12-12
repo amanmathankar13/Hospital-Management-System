@@ -10,4 +10,5 @@ public interface AppointmentRecordService {
     public AppointmentRecordDTO getAppointmentRecordByAppointmentId(Long appointmentId) throws HMSException;
 
     public AppointmentRecordDTO getAppointmentRecordById(Long id) throws HMSException;
+    public AppointmentRecordDTO getAppointmentRecordDetailsByAppoitmentId (Long appointmentId);
 }

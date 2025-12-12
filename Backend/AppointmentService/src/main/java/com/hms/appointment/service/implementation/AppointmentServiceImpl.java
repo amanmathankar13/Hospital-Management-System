@@ -16,7 +16,10 @@ import com.hms.appointment.exception.HMSException;
 import com.hms.appointment.repository.AppointmentRepository;
 import com.hms.appointment.service.AppointmentService;
 
+import jakarta.transaction.Transactional;
+
 @Service
+@Transactional
 public class AppointmentServiceImpl implements AppointmentService{
 
     @Autowired

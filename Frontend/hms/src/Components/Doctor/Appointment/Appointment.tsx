@@ -6,7 +6,7 @@ import { Column } from 'primereact/column';
 import { ActionIcon, Button, LoadingOverlay, Modal, SegmentedControl, Select, Text, Textarea } from '@mantine/core';
 import { Tag } from 'primereact/tag';
 import { TextInput } from '@mantine/core';
-import { IconEdit, IconPlus, IconSearch, IconTrash } from '@tabler/icons-react';
+import { IconEye, IconSearch, IconTrash } from '@tabler/icons-react';
 import { useDisclosure } from '@mantine/hooks';
 import { getDoctorDropDown } from '../../../Service/DoctorProfileService';
 import { DateTimePicker } from '@mantine/dates';
@@ -17,8 +17,9 @@ import { cancelAppoinment, getAllAppointmentsByDoctor,  scheduleAppointment } fr
 import { errorNotification, successNotification } from '../../../Utility/NotificationService';
 import { formatDateTime } from '../../../Utility/DateUtility';
 import { modals } from '@mantine/modals';
-import 'primereact/resources/themes/lara-light-blue/theme.css'
+import 'primereact/resources/themes/lara-light-blue/theme.css';
 import { Toolbar } from 'primereact/toolbar';
+import { useNavigate } from 'react-router-dom';
 
 interface Country {
   name: string;
@@ -45,6 +46,7 @@ interface Customer {
 
 const Appointment=()=> {
     const [loading, setLoading] = useState<boolean>(false);
+    const navigate = useNavigate();
     const [tab, setTab] = useState<string>('Today');
     const[appointment, setAppointment] = useState<any[]>([]);
     const user = useSelector((state:any)=> state.user);
@@ -185,6 +187,9 @@ const Appointment=()=> {
 
     const actionBodyTemplate = (rowData: any) => {
         return <div className='flex gap-2'>
+            <ActionIcon color='blue' onClick={()=>navigate(""+rowData.id)}>
+                <IconEye size={20} stroke={1.5} />
+            </ActionIcon>
             {rowData.appointmentStatus!=="CANCELLED"&&<ActionIcon color='red' onClick={()=>handleDelete(rowData)}>
                 <IconTrash size={20} stroke={1.5} />
             </ActionIcon>
@@ -197,11 +202,7 @@ const Appointment=()=> {
     const timeTemplate=(rowData:any)=>{
         return <span>{formatDateTime(rowData.appointmentTime)}</span>
     }
-    const leftToolbarTemplate = () => {
-        return (
-                    <Button leftSection={<IconPlus/>} onClick={open} variant="filled">Schedule Appointment</Button>
-        );
-    };
+    
 
     const rightToolbarTemplate = () => {
         return <TextInput leftSection={<IconSearch/>} fw={500} value={globalFilterValue} onChange={onGlobalFilterChange} placeholder="Keyword Search" />
@@ -217,7 +218,7 @@ const Appointment=()=> {
       data={["Today", "Upcoming", "Past"]}
     />
     }
-    const filteredAppointment = appointment.filter((appointment)=>{
+    const filteredAppointment = appointment.filter((appointment:any) => {
         const appointmentDate = new Date(appointment.appointmentTime);
         const today = new Date();
         today.setHours(0,0,0,0);
@@ -233,9 +234,9 @@ const Appointment=()=> {
         }
     })
     return (
-        <div className="card">
+        <div className="card overflow-hidden">
             <Toolbar className="mb-4"  end={rightToolbarTemplate} start={centerToolbarTemplate}></Toolbar>
-            <DataTable  stripedRows value={filteredAppointment} size='small' paginator  rows={10}
+            <DataTable stripedRows value={filteredAppointment} size='small' paginator  rows={10}
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     rowsPerPageOptions={[10, 25, 50]} dataKey="id" selectionMode="checkbox" selection={selectedCustomers} 
                     onSelectionChange={(e) => {

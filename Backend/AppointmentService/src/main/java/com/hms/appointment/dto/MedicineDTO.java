@@ -33,6 +33,6 @@ public class MedicineDTO {
     private Long prescriptionId;
 
     public Medicine toEntity(){
-        return new Medicine(id, name, medicineId, dosage, frequency, duration, type, route, instructions, new Prescription());
+        return new Medicine(id, name, medicineId, dosage, frequency, duration, type, route, instructions, new Prescription(prescriptionId));
     }
 }

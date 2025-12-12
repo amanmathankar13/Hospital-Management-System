@@ -1,5 +1,7 @@
 package com.hms.appointment.service.implementation;
 
+import java.time.LocalDate;
+ 
 import org.springframework.stereotype.Service;
 
 import com.hms.appointment.dto.PrescriptionDTO;
@@ -22,6 +24,7 @@ public class PrescriptionServiceImpl implements PrescriptionService {
 
    @Override
     public Long savePrescription(PrescriptionDTO prescription) {
+        prescription.setPrescriptionDate(LocalDate.now());
         Long prescriptionId = prescriptionRepository.save(prescription.toEntity()).getId();
         prescription.getMedicines().forEach(medicine->{
             medicine.setPrescriptionId(prescriptionId);

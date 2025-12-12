@@ -15,6 +15,9 @@ import com.hms.appointment.dto.AppointmentDTO;
 import com.hms.appointment.dto.AppointmentDetails;
 import com.hms.appointment.exception.HMSException;
 import com.hms.appointment.service.AppointmentService;
+
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +26,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 
 
+
+@Tag(name = "AppointmentController", description = "Manage appointment operations")
 @RestController
 @RequestMapping("/appointment")
 @Validated

@@ -31,6 +31,7 @@ public class AppointmentRecordDTO {
     private List<String> tests;
     private String notes;
     private String referal;
+    private PrescriptionDTO prescription;
     private LocalDate followUpDate;
     private LocalDateTime createdAt;
 
