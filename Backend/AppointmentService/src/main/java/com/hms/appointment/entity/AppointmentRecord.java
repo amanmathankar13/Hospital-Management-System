@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import com.hms.appointment.dto.AppointmentRecordDTO;
+import com.hms.appointment.dto.RecordDetails;
 import com.hms.appointment.utility.StringListConverter;
 
 import jakarta.persistence.Entity;
@@ -50,6 +51,8 @@ public class AppointmentRecord {
         return new AppointmentRecordDTO(id, patientId, doctorId, appointment.getId(), StringListConverter.convertStringtoList(symptoms), diagnosis, StringListConverter.convertStringtoList(tests), notes, referal, null,followUpDate, createdAt);
     }
 
-    
+    public RecordDetails toRecordDetails(){
+        return new RecordDetails(id, patientId, doctorId, null, appointment.getId(), StringListConverter.convertStringtoList(symptoms), StringListConverter.convertStringtoList(diagnosis), StringListConverter.convertStringtoList(tests), notes, referal, followUpDate, createdAt);
+    }
 
 }

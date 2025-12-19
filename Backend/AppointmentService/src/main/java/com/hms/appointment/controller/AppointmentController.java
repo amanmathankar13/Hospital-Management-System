@@ -17,10 +17,10 @@ import com.hms.appointment.exception.HMSException;
 import com.hms.appointment.service.AppointmentService;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
-
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.GetMapping;
+
 
 
 
@@ -66,5 +66,7 @@ public class AppointmentController {
     public ResponseEntity<List<AppointmentDetails>> getAppointmentDetailsByDoctorId(@PathVariable("doctorId") Long doctorId) {
         return ResponseEntity.ok(appointmentService.getAppointmentDetailsByDoctorId(doctorId));
     }
+
+    
     
 }

@@ -1,11 +1,17 @@
 package com.hms.appointment.service.implementation;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import com.hms.appointment.clients.ProfileClient;
 import com.hms.appointment.dto.AppointmentRecordDTO;
+import com.hms.appointment.dto.DoctorDetails;
+import com.hms.appointment.dto.RecordDetails;
 import com.hms.appointment.entity.AppointmentRecord;
 import com.hms.appointment.exception.HMSException;
 import com.hms.appointment.repository.AppointmentRecordRepository;
@@ -25,6 +31,8 @@ public class AppointmentRecordImpl implements AppointmentRecordService {
     private final AppointmentRecordRepository appointmentRecordRepository;
 
     private final PrescriptionService prescriptionService;
+
+    private final ProfileClient profileClient;
 
     @Override
     public Long createAppointmentRecord(AppointmentRecordDTO appointmentRecordDTO) throws HMSException {
@@ -69,6 +77,43 @@ public class AppointmentRecordImpl implements AppointmentRecordService {
         appointmentRecord.setPrescription(prescriptionService.getPrescriptionByAppointmentId(appointmentId));
         return appointmentRecord;
     }
+
+    @Override
+    public List<RecordDetails> getAppointmentRecordsByPatientId(Long patientId) {
+        List<AppointmentRecord> records = appointmentRecordRepository.findByPatientId(patientId);
+        List<RecordDetails> recordDetails =  records.stream().map(AppointmentRecord::toRecordDetails).toList();
+        List<Long> doctorIds = recordDetails.stream().map(RecordDetails::getDoctorId).distinct().toList();
+
+        List<DoctorDetails> doctors = profileClient.getDoctorsByIds(doctorIds);
+
+        Map<Long, String> doctorMap = doctors.stream()
+            .collect(Collectors.toMap(DoctorDetails::getId, DoctorDetails::getName));
+
+        recordDetails.forEach(record -> {
+            String name = doctorMap.get(record.getDoctorId());
+            if(name != null){
+                record.setDoctorName(doctorMap.get(record.getDoctorId()));
+            }
+            else {
+                record.setDoctorName("Unknown Doctor");
+            }
+        });
+
+        return recordDetails;
+
+    }
+
     
-    
+
+    @Override
+    public List<AppointmentRecordDTO> getAppointmentRecordsById(Long recordId) {
+        List<AppointmentRecord> records = appointmentRecordRepository.findAllById(List.of(recordId));
+        return records.stream().map(AppointmentRecord::toDto).toList();
+    }
+
+    @Override
+    public Boolean isRecordExists(Long appointmentId) throws HMSException {
+        return appointmentRecordRepository.existsByAppointmentId(appointmentId);
+    }
+
 }

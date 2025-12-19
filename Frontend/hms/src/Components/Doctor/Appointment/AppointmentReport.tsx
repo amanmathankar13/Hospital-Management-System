@@ -5,7 +5,6 @@ import { IconTrash } from '@tabler/icons-react'
 import { useForm } from '@mantine/form'
 import { createAppointmentReport } from '../../../Service/AppointmentService'
 import { errorNotification, successNotification } from '../../../Utility/NotificationService'
-import { useDispatch } from 'react-redux'
 
 type Medicine = {
     name: string;
@@ -75,7 +74,7 @@ const AppointmentReport = ({appointment}:any) => {
             successNotification("Report Created Successfully");
             form.reset();
         }).catch((error)=>{
-            errorNotification(error?.response?.data?. errorMessage || "Failed to create report");
+            errorNotification(error?.response?.data?.errorMessage || "Failed to create report");
         }).finally(()=>{
             setLoading(false);
         })
@@ -131,7 +130,7 @@ const AppointmentReport = ({appointment}:any) => {
         </Fieldset>
         <div className='flex items-center justify-center gap-4'>
             <Button type='submit' loading={loader} className='w-full' color='primary' variant='filled'>Submit Report</Button>
-            <Button type='button' loading={loader} className='w-full' color='red' variant='filled'>Reset</Button>
+            <Button type='reset' className='w-full' color='red' variant='filled'>Reset</Button>
        </div>
     </form>
   )

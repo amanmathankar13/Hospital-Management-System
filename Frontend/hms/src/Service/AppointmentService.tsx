@@ -53,7 +53,26 @@ const getAllAppointmentsByPatient = async(patientId:any)=>{
 }
 
 const createAppointmentReport = (data:any)=>{
-    return axiosInstance.post('/appointment/report/create', data)
+    return axiosInstance.post('/appointment/record/create', data)
+    .then((response: any)=> response.data)
+    .catch((error: any)=> {throw error})
+}
+
+const isReportExists = async(appointmentId:any)=>{
+    return axiosInstance.get('/appointment/record/isRecordExists/'+appointmentId)
+    .then((response: any)=> response.data)
+    .catch((error: any)=> {throw error})
+}
+
+const getReportsByPatientId = async(patientId:any)=>{
+    return axiosInstance.get('/appointment/record/getRecordsByPatientId/'+patientId)
+    .then((response: any)=> response.data)
+    .catch((error: any)=> {throw error})
+}
+
+const getPrescriptionsByPatientId = async(patientId:number)=>{
+    console.log("Fetching prescriptions for patientId:", patientId);
+    return axiosInstance.get(`/appointment/record/getPrescriptionsByPatientId/${patientId}`)
     .then((response: any)=> response.data)
     .catch((error: any)=> {throw error})
 }
@@ -69,4 +88,4 @@ const getAllAppointmentsByDoctor = async(doctorId:any)=>{
                     throw error
                     })
 }
-export {scheduleAppointment, cancelAppoinment, getAppoinment, getAppoinmentDetails,getAllAppointmentsByDoctor,getAllAppointmentsByPatient, createAppointmentReport}
+export {scheduleAppointment, cancelAppoinment, getAppoinment, getAppoinmentDetails,getAllAppointmentsByDoctor,getAllAppointmentsByPatient, createAppointmentReport, isReportExists, getReportsByPatientId, getPrescriptionsByPatientId}

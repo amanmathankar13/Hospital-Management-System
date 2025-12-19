@@ -58,6 +58,12 @@ public class DoctorController {
         return ResponseEntity.ok(doctorService.getAllDoctors());
     }
     
+
+    @GetMapping("/getDoctorsByIds")
+    public ResponseEntity<List<DoctorDropDown>> getDoctorsByIds(@RequestParam("ids") List<Long> ids) {
+        return ResponseEntity.ok(doctorService.getDoctorsByIds(ids));
+    }
+    
     
 
 }

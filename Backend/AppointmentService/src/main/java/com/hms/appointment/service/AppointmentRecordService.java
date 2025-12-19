@@ -1,6 +1,9 @@
 package com.hms.appointment.service;
 
+import java.util.List;
+
 import com.hms.appointment.dto.AppointmentRecordDTO;
+import com.hms.appointment.dto.RecordDetails;
 import com.hms.appointment.exception.HMSException;
 
 public interface AppointmentRecordService {
@@ -10,5 +13,10 @@ public interface AppointmentRecordService {
     public AppointmentRecordDTO getAppointmentRecordByAppointmentId(Long appointmentId) throws HMSException;
 
     public AppointmentRecordDTO getAppointmentRecordById(Long id) throws HMSException;
-    public AppointmentRecordDTO getAppointmentRecordDetailsByAppoitmentId (Long appointmentId);
+    public AppointmentRecordDTO getAppointmentRecordDetailsByAppoitmentId (Long appointmentId) throws HMSException;
+
+    List<RecordDetails> getAppointmentRecordsByPatientId(Long patientId) throws HMSException;
+    List<AppointmentRecordDTO> getAppointmentRecordsById(Long recordId) throws HMSException;
+    Boolean isRecordExists(Long recordId) throws HMSException;
+    
 }

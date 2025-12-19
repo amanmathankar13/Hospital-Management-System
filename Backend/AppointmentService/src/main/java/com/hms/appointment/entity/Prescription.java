@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 
 import com.hms.appointment.dto.PrescriptionDTO;
+import com.hms.appointment.dto.PrescriptionDetails;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -40,5 +41,9 @@ public class Prescription {
 
     public PrescriptionDTO toDTO(){
         return new PrescriptionDTO(this.id, this.patientId, this.doctorId, appointment.getId(), this.prescriptionDate, this.notes, null);
+    }
+
+    public PrescriptionDetails toDetails(){
+        return new PrescriptionDetails(this.id, this.patientId, this.doctorId, null, appointment.getId(), this.prescriptionDate, this.notes, null);
     }
 }

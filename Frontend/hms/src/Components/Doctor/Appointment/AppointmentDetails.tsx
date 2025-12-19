@@ -4,8 +4,9 @@ import { Breadcrumbs } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import { getAppoinmentDetails } from '../../../Service/AppointmentService';
 import { formatDateTime } from '../../../Utility/DateUtility';
-import { IconPhoto, IconMessageCircle, IconSettings, IconClipboardHeart, IconHistoryToggle, IconPillFilled } from '@tabler/icons-react';
+import { IconClipboardHeart, IconHistoryToggle, IconPillFilled } from '@tabler/icons-react';
 import AppointmentReport from './AppointmentReport';
+import Prescriptions from './Prescriptions';
 
 // const items = [
 //   { title: 'Mantine', href: '#' },
@@ -63,9 +64,9 @@ const AppointmentDetails = () => {
         <Divider my="sm" />
 
         <Text fw={600} c="primary">Patient</Text>
-        <Text>{appointment.patientName} (ID: {appointment.patientId})</Text>
-        <Text>Email: {appointment.patientEmail}</Text>
-        <Text>Phone: {appointment.patientPhone}</Text>
+        <Text>Name : {appointment.patientName} </Text>
+        <Text>Email : {appointment.patientEmail}</Text>
+        <Text>Phone : {appointment.patientPhone}</Text>
 
         <Divider my="sm" />
 
@@ -94,7 +95,7 @@ const AppointmentDetails = () => {
       </Tabs.Panel>
 
       <Tabs.Panel value="prescription">
-        Messages tab content
+        <Prescriptions appointment = {appointment}/>
       </Tabs.Panel>
 
       <Tabs.Panel value="report">
