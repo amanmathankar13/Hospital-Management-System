@@ -25,7 +25,7 @@ const links=[
 const Sidebar = () => {
     const user = useSelector((state:any)=> state.user)
   return (
-    <div className='flex'>
+    <div className='flex overflow'>
         <div className='w-64'></div>
         <div className='bg-dark fixed w-64 h-screen overflow-y-auto hide-scrollbar flex flex-col gap-8 items-center'>
             <div className='flex fixed z-[500] py-3 bg-dark items-center gap-1 text-primary-400'>

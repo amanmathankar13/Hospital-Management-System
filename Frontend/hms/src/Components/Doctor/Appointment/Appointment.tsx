@@ -236,7 +236,7 @@ const Appointment=()=> {
     return (
         <div className="card overflow-hidden">
             <Toolbar className="mb-4"  end={rightToolbarTemplate} start={centerToolbarTemplate}></Toolbar>
-            <DataTable stripedRows value={filteredAppointment} size='small' paginator  rows={10}
+            <DataTable className='static' stripedRows value={filteredAppointment} size='small' paginator  rows={10}
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     rowsPerPageOptions={[10, 25, 50]} dataKey="id" selectionMode="checkbox" selection={selectedCustomers} 
                     onSelectionChange={(e) => {

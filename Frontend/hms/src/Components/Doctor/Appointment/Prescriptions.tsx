@@ -1,5 +1,5 @@
-import { ActionIcon, Center, TextInput } from '@mantine/core';
-import { IconEye, IconSearch, IconTrash } from '@tabler/icons-react';
+import { ActionIcon, Badge, Card, Divider, Group, Modal, Stack, TextInput, Text } from '@mantine/core';
+import { IconEye, IconSearch, IconVaccineBottle } from '@tabler/icons-react';
 import { FilterMatchMode} from 'primereact/api';
 import { Column } from 'primereact/column';
 import { DataTable, DataTableFilterMeta } from 'primereact/datatable';
@@ -7,12 +7,17 @@ import React, { useEffect, useState } from 'react'
 import { getPrescriptionsByPatientId } from '../../../Service/AppointmentService';
 import { formatDate } from '../../../Utility/DateUtility';
 import { useNavigate } from 'react-router-dom';
+import { useDisclosure} from '@mantine/hooks';
 
 const Prescriptions = ({appointment}: any) => {
 
 
  const [data, setData] = useState<any[]>([]);
  const navigate = useNavigate();
+
+ const[medicineData, setMedicineData]= useState<any>([]);
+
+ const[opened, {open, close}]= useDisclosure(false);
 
 
  const [globalFilterValue, setGlobalFilterValue] = useState<string>('');
@@ -22,6 +27,7 @@ const Prescriptions = ({appointment}: any) => {
          
          
 });
+
  const onGlobalFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
          const value = e.target.value;
          let _filters:any = { ...filters };
@@ -32,12 +38,21 @@ const Prescriptions = ({appointment}: any) => {
          setGlobalFilterValue(value);
      };
 
+    const handleMedicineView=(medicines:any[])=>{
+        console.log("Medicines:", medicines);
+        open();
+        setMedicineData(medicines);
+    };
+
     const actionBodyTemplate = (rowData: any) => {
         
 
         return <div className='flex gap-2'>
             <ActionIcon color='blue' onClick={()=>navigate("/doctor/appointments/"+rowData.appointmentId)}>
                 <IconEye size={20} stroke={1.5} />
+            </ActionIcon>
+            <ActionIcon color='red' onClick={()=>handleMedicineView(rowData.medicines)}>
+                <IconVaccineBottle size={20} stroke={1.5} />
             </ActionIcon>
         </div>
     };
@@ -75,9 +90,73 @@ const Prescriptions = ({appointment}: any) => {
                     <Column field="medicines" header="Medicines"    body={(rowdata)=>rowdata.medicines?.length ?? 0}/>
                     <Column field="notes" header="Notes"  style={{ minWidth: '14rem' }} />
                     <Column headerStyle={{ width: '5rem', textAlign: 'center' }} bodyStyle={{ textAlign: 'center', overflow: 'visible' }} body={actionBodyTemplate} />
-                    
                     {/* <Column headerStyle={{ width: '5rem', textAlign: 'center' }} bodyStyle={{ textAlign: 'center', overflow: 'visible' }} body={actionBodyTemplate} /> */}
     </DataTable>
+      <Modal opened={opened} size="xl" onClose={close} title="Medicines Prescribed"  centered>
+        <div className='grid grid-cols-2 gap-5'>
+        {medicineData?.map((medicine:any, index:number)=>(
+        <Card key={index} shadow="sm" radius="md" withBorder>
+        <Stack >
+          {/* Medicine Name */}
+          <Group justify="space-between">
+            <Text fw={600} size="lg">
+              {medicine.name}
+            </Text>
+            <Badge color="blue" variant="light">
+              {medicine.type}
+            </Badge>
+          </Group>
+
+          <Divider />
+
+          {/* Dosage & Frequency */}
+          <Group justify="space-between">
+            <Text size="sm" c="dimmed">
+              Dosage
+            </Text>
+            <Text size="sm">{medicine.dosage}</Text>
+          </Group>
+
+          <Group justify="space-between">
+            <Text size="sm" c="dimmed">
+              Frequency
+            </Text>
+            <Text size="sm">{medicine.frequency}</Text>
+          </Group>
+
+          {/* Route */}
+          <Group justify="space-between">
+            <Text size="sm" c="dimmed">
+              Route
+            </Text>
+            <Text size="sm">{medicine.route}</Text>
+          </Group>
+
+          {/* Duration */}
+          <Group justify="space-between">
+            <Text size="sm" c="dimmed">
+              Duration
+            </Text>
+            <Text size="sm">{medicine.duration} days</Text>
+          </Group>
+
+          <Divider />
+
+          {/* Instructions */}
+          <Text size="sm" fw={500}>
+            Instructions
+          </Text>
+          <Text size="sm" c="dimmed">
+            {medicine.instructions}
+          </Text>
+        </Stack>
+      </Card>
+        ))}
+        </div>
+        {
+            medicineData.length===0 && <Text>No medicines prescribed.</Text>
+        }
+      </Modal>
     </div>
   )
 }

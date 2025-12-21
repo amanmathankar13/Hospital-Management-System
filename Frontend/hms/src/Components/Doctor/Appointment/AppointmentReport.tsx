@@ -1,10 +1,15 @@
 import { ActionIcon, Button, Fieldset, MultiSelect, NumberInput, Select, Textarea, TextInput} from '@mantine/core'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {medicineFrequencies, symptoms, tests } from '../../../Data/DrowDownData'
-import { IconTrash } from '@tabler/icons-react'
+import { IconEye, IconSearch, IconTrash } from '@tabler/icons-react'
 import { useForm } from '@mantine/form'
-import { createAppointmentReport } from '../../../Service/AppointmentService'
+import { createAppointmentReport, getReportsByPatientId, isReportExists } from '../../../Service/AppointmentService'
 import { errorNotification, successNotification } from '../../../Utility/NotificationService'
+import { Column } from 'primereact/column'
+import { DataTable, DataTableFilterMeta } from 'primereact/datatable'
+import { useNavigate } from 'react-router-dom'
+import { formatDate } from '../../../Utility/DateUtility'
+import { FilterMatchMode } from 'primereact/api'
 
 type Medicine = {
     name: string;
@@ -19,7 +24,9 @@ type Medicine = {
 }
 
 const AppointmentReport = ({appointment}:any) => {
-    const [loader, setLoading] = useState(false);
+    const [loader, setLoading] = useState<boolean>(false);
+    const [allowed, setAllowed] = useState<boolean>(false);
+    const[edit, setEdit]= useState<boolean>(false);
     const form = useForm({
         initialValues:{
             symptoms: [],
@@ -55,8 +62,26 @@ const AppointmentReport = ({appointment}:any) => {
     const removeMedicine=(index: number)=>{
         form.removeListItem('prescription.medicines', index);
     }
+    useEffect(() => {
+        fetchData();
+    }, [appointment]);
+
+    const fetchData=()=>{
+        getReportsByPatientId(appointment?.patientId).then((res) => {
+            setData(res);
+        }).catch((error) => {
+            console.error("Error fetching appointment reports:", error);
+        });
+        isReportExists(appointment?.id).then((res)=>{
+            setAllowed(!res);
+        }).catch((error)=>{
+            console.error("Error checking report existence:", error);
+            setAllowed(true);
+        });
+    }
+
+
     const handleSubmit=(values: typeof form.values)=>{
-        console.log("form submitter by ", values)
         let data = {
             ...values,
             doctorId: appointment.doctorId,
@@ -73,14 +98,68 @@ const AppointmentReport = ({appointment}:any) => {
         createAppointmentReport(data).then((res)=>{
             successNotification("Report Created Successfully");
             form.reset();
+            setEdit(false);
+            setAllowed(false);
+            fetchData();
         }).catch((error)=>{
             errorNotification(error?.response?.data?.errorMessage || "Failed to create report");
         }).finally(()=>{
             setLoading(false);
         })
     }
+
+    const [globalFilterValue, setGlobalFilterValue] = useState<string>('');
+     const [filters, setFilters] = useState<DataTableFilterMeta>({
+             global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+    
+             
+             
+    });
+     const onGlobalFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+             const value = e.target.value;
+             let _filters:any = { ...filters };
+     
+             _filters['global'].value = value;
+     
+             setFilters(_filters);
+             setGlobalFilterValue(value);
+    };
+    const actionBodyTemplate = (rowData: any) => {
+        
+
+        // return <div className='flex gap-2'>
+        //     <ActionIcon color='blue' onClick={()=>navigate("/doctor/appointments/"+rowData.appointmentId)}>
+        //         <IconEye size={20} stroke={1.5} />
+        //     </ActionIcon>
+        // </div>
+    };
+    const rendorHeader = () => {
+        return (
+            <div className="flex flex-wrap gap-2 justify-between items-center">
+                {allowed && <Button variant='filled' onClick={()=> setEdit(true)} color='primary' >Add Report</Button>}
+                <TextInput leftSection={<IconSearch/>} fw={500} value={globalFilterValue} onChange={onGlobalFilterChange} placeholder="Keyword Search" />
+            </div>
+        )
+    };
+    const header = rendorHeader();
+    const navigate = useNavigate();
+    const [data, setData] = useState<any[]>([]);
   return (
-    <form onSubmit={form.onSubmit(handleSubmit)} className='grid gap-5'>
+    <div>
+        {!edit ? <DataTable header={header} stripedRows value={data} size='small' paginator  rows={10}
+                                paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+                                rowsPerPageOptions={[10, 25, 50]} dataKey="id"
+                                filterDisplay="menu" globalFilterFields={['doctorName', 'notes']}
+                                emptyMessage="No appointment found." currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
+                            <Column field="doctorName" header="Doctor" sortable />
+                            <Column field="diagnosis" header="Diagnosis" />
+                            <Column field="reportDate" header="Report Date" sortable   body={(rowData)=>formatDate(rowData.createdAt)}/>
+                            <Column field="notes" header="Notes"/>
+                            {/* <Column headerStyle={{ width: '5rem', textAlign: 'center' }} bodyStyle={{ textAlign: 'center', overflow: 'visible' }} body={actionBodyTemplate} /> */}
+                            {/* <Column headerStyle={{ width: '5rem', textAlign: 'center' }} bodyStyle={{ textAlign: 'center', overflow: 'visible' }} body={actionBodyTemplate} /> */}
+            </DataTable>
+    
+    : <form onSubmit={form.onSubmit(handleSubmit)} className='grid gap-5'>
         <Fieldset className='grid gap-3 grid-cols-2' legend={<span className='text-lg font-medium text-primary-500'>Personal information</span>}  radius={'md'}>
             <MultiSelect
             {...form.getInputProps('symptoms')}
@@ -112,7 +191,6 @@ const AppointmentReport = ({appointment}:any) => {
                             <IconTrash />
                         </ActionIcon>
                     </div>} className='grid gap-4 col-span-2 grid-cols-2'>
-                    
                         <TextInput  {...form.getInputProps(`prescription.medicines.${index}.name`)} label='Medicine' placeholder='Enter medicine name' withAsterisk/>
                         <TextInput {...form.getInputProps(`prescription.medicines.${index}.dosage`)} label='Dosage' placeholder='Enter dosage amount' withAsterisk />
                         <Select {...form.getInputProps(`prescription.medicines.${index}.frequency`)} label='Frequency (Morning-Afternoon-Evening)' placeholder='Enter frequency' withAsterisk data={medicineFrequencies}/>
@@ -132,7 +210,8 @@ const AppointmentReport = ({appointment}:any) => {
             <Button type='submit' loading={loader} className='w-full' color='primary' variant='filled'>Submit Report</Button>
             <Button type='reset' className='w-full' color='red' variant='filled'>Reset</Button>
        </div>
-    </form>
+    </form>}
+    </div>
   )
 }
 
